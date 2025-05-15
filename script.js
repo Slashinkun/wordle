@@ -1,23 +1,28 @@
-
-
-
 let wordList = []
 let secretWord = ""
 let maxGuesses = 6
 let totalGuess = 0
 
+//a faire  : slider pour choisir la longueur du mot
+let wordLength = 6
+
+const alertUser =  document.getElementById("alert")
+const userTries = document.getElementById("userTries")
+const userInput = document.getElementById("userInput")
+const userGuess = document.getElementById("userGuess")
+
+const board = document.getElementById("wordle-board");
+
 function removeAccents(str) {
     return str.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); 
 }
-
-
 
 function initializeWordList(){
     fetch("mots.txt").then(response => response.text())
     .then(text => {
          wordList = text.split(/\r?\n/).filter(Boolean);
          wordList = wordList.map(word => removeAccents(word));
-         wordList = wordList.filter((word) => word.length < 7)
+         wordList = wordList.filter((word) => word.length <= wordLength)
          startGame();
         })
         .catch(err => {
@@ -27,18 +32,41 @@ function initializeWordList(){
 
 
 function startGame(){
+    
     userTries.innerText = ` Tentatives : ${totalGuess}/${maxGuesses}`
     secretWord = wordList[Math.floor(Math.random() * wordList.length)];
+    addEmptyWordRow(secretWord.length)
     userInput.maxLength = secretWord.length
     userInput.placeholder = `${secretWord.length} lettres`
-    console.log("Mot secret :", secretWord);
-    console.log(countLetters(secretWord))
+    //console.log("Mot secret :", secretWord);
+    //console.log(countLetters(secretWord))
+
 }
 
 
 function checkWord(word){
     
     if (word === secretWord){
+        handleCorrectGuess(word)
+    }else if(wordList.find((w) => w === word)){
+        handleIncorrectGuess(word)
+    }else{
+        showTemporaryAlert("Votre mot n'existe pas, veuillez reessayez")
+    }
+
+    if(totalGuess === maxGuesses){
+        handleEndGame()
+    }
+
+    
+}
+
+function showTemporaryAlert(message){
+    alertUser.innerText = message
+    setTimeout(() => {alertUser.innerText = ""},1000)
+}
+
+function handleCorrectGuess(word){
         userInput.disabled = true
         totalGuess++;
         addWordRow(word,secretWord)
@@ -50,16 +78,18 @@ function checkWord(word){
             location.reload()
         })
         alertUser.appendChild(retryButton)  
-    }else if(wordList.find((w) => w === word)){
-        console.log(wordList.find((w) => w === word))
-        addWordRow(word,secretWord)
-        totalGuess++;
-    }else{
-        alertUser.innerText = "Votre mot n'existe pas, veuillez reessayez"
-        setTimeout(() => {alertUser.innerText = ""},1000)
-    }
+}
 
-    if(totalGuess === maxGuesses){
+function handleIncorrectGuess(word){
+    board.removeChild(document.getElementById("empty-row"))
+        //console.log(wordList.find((w) => w === word))
+        addWordRow(word,secretWord)
+        addEmptyWordRow(secretWord.length)
+        totalGuess++;
+}
+
+function handleEndGame(){
+    board.removeChild(document.getElementById("empty-row")) 
         alertUser.innerHTML = `Dommage, le mot était <b>${secretWord}<b>`
         userInput.disabled = true
         let retryButton = document.createElement("button")
@@ -69,9 +99,6 @@ function checkWord(word){
         })
         alertUser.appendChild(retryButton)
         return;
-    }
-
-    
 }
 
 function countLetters(word){
@@ -88,45 +115,9 @@ function countLetters(word){
     return letters
 }
 
-//retourne une balise li avec le resultat du mot
-// function addLineGuess(word){
-//     let secretWordLetter = countLetter(secretWord)
-//     let guessElement = document.createElement("li")
-
-//     let states = new Array(word.length).fill("incorrect");
-
-//     for (let i = 0; i < word.length; i++) {
-//         let guessChar = word[i];
-//         let secretChar = secretWord[i];
-
-//         if (guessChar === secretChar) {
-//             states[i] = "correct";
-//             secretWordLetter[guessChar]--;
-//         }
-//     }
-
-//     for (let i = 0; i < word.length; i++) {
-//         let guessChar = word[i];
-
-//         if (states[i] === "incorrect" && secretWordLetter[guessChar] > 0) {
-//             states[i] = "almost";
-//             secretWordLetter[guessChar]--;
-//         }
-//     }
-
-//     for (let i = 0; i < word.length; i++){
-//         let letter = document.createElement("span");
-//         letter.innerText = word[i];
-//         letter.className = states[i];
-//         guessElement.appendChild(letter)
-//     }
-
-//     userGuess.appendChild(guessElement)
-
-// }
 
 function addWordRow(guess, secretWord) {
-  const board = document.getElementById("wordle-board");
+  
   const row = document.createElement("div");
   row.className = "word-row";
 
@@ -160,6 +151,24 @@ function addWordRow(guess, secretWord) {
   board.appendChild(row);
 }
 
+function addEmptyWordRow(wordLength) {
+  
+  const row = document.createElement("div");
+  row.id = "empty-row"
+  row.classList.add("word-row");
+
+  for (let i = 0; i < wordLength; i++) {
+    const box = document.createElement("div");
+    box.classList.add("letter-box");
+    box.style.borderColor = "black"; 
+    box.style.opacity = "0.5"; 
+    row.appendChild(box);
+  }
+
+  board.appendChild(row);
+}
+
+
 
 
 
@@ -168,8 +177,7 @@ document.getElementById("userInput").addEventListener("keydown", (event) => {
         if(event.target.value.length === secretWord.length){
             checkWord(event.target.value)
         }else{
-            alertUser.innerText = "Votre mot est trop petit, choissiez un autre mot"
-            setTimeout(() => {alertUser.innerText = ""},1000)
+            showTemporaryAlert("Votre mot est trop petit, choissiez un autre mot")
         }
     }
       
@@ -178,10 +186,6 @@ document.getElementById("userInput").addEventListener("keydown", (event) => {
 
 
 
-const alertUser =  document.getElementById("alert")
-const userTries = document.getElementById("userTries")
-const userInput = document.getElementById("userInput")
-const userGuess = document.getElementById("userGuess")
 
 initializeWordList()
 
