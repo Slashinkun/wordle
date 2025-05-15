@@ -2,15 +2,11 @@ let wordList = []
 let secretWord = ""
 let maxGuesses = 6
 let totalGuess = 0
-
-
 let wordLength = 6
 
 const alertUser =  document.getElementById("alert")
 const userTries = document.getElementById("userTries")
 const userInput = document.getElementById("userInput")
-const userGuess = document.getElementById("userGuess")
-
 const board = document.getElementById("wordle-board");
 const lengthSlider = document.getElementById("wordsLength")
 
@@ -67,6 +63,7 @@ function showTemporaryAlert(message){
     alertUser.innerText = message
     setTimeout(() => {alertUser.innerText = ""},1000)
 }
+
 
 function handleCorrectGuess(word){
     userInput.disabled = true
@@ -125,6 +122,8 @@ function countLetters(word){
 }
 
 
+
+//ajoute au jeu le mot que le joueur a donné
 function addWordRow(guess, secretWord) {
   
   const row = document.createElement("div");
@@ -160,6 +159,8 @@ function addWordRow(guess, secretWord) {
   board.appendChild(row);
 }
 
+
+// aide pour montrer la longueur du mot
 function addEmptyWordRow(wordLength) {
   
   const row = document.createElement("div");
@@ -178,7 +179,9 @@ function addEmptyWordRow(wordLength) {
 }
 
 
+//quand le joueur a donné un mot
 document.getElementById("userInput").addEventListener("keydown", (event) => {
+    
     if(event.key == "Enter"){
         if(event.target.value.length === secretWord.length){
             checkWord(event.target.value)
@@ -188,6 +191,7 @@ document.getElementById("userInput").addEventListener("keydown", (event) => {
     }
       
 })
+
 
 
 lengthSlider.addEventListener("change", (event) => {
