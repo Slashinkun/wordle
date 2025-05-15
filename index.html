@@ -12,7 +12,12 @@
     <ul id="userGuess"></ul>
     <input type="text" name="" id="userInput">
     <div id="userTries"></div>
-    <div><input type="range" id="wordsLength" value="6" min="1" max="10" step="1"><span id="length"></span><button id="confirmLength">Confirmer</button></div>
+    <div style="padding-top: 10px;">
+        <div>Paramètres du jeu</div>
+        <label for="lengthSlider">Longueur du mot</label>
+        <input  name="lengthSlider" type="range" id="wordsLength" value="6" min="1" max="10" step="1">
+        <span id="length"></span>
+        <button id="confirmLength">Confirmer</button></div>
     <div id="alert"></div>
     
     <script src="script.js"></script>

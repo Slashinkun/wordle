@@ -3,7 +3,7 @@ let secretWord = ""
 let maxGuesses = 6
 let totalGuess = 0
 
-//a faire  : slider pour choisir la longueur du mot
+
 let wordLength = 6
 
 const alertUser =  document.getElementById("alert")
@@ -12,6 +12,7 @@ const userInput = document.getElementById("userInput")
 const userGuess = document.getElementById("userGuess")
 
 const board = document.getElementById("wordle-board");
+const lengthSlider = document.getElementById("wordsLength")
 
 function removeAccents(str) {
     return str.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); 
@@ -28,11 +29,12 @@ function initializeWordList(){
         .catch(err => {
             console.error("Erreur pendant la recuperation de la liste de mot",err)
         })
+    
 }
 
 
 function startGame(){
-    
+    document.getElementById("length").innerText = wordLength
     userTries.innerText = ` Tentatives : ${totalGuess}/${maxGuesses}`
     secretWord = wordList[Math.floor(Math.random() * wordList.length)];
     addEmptyWordRow(secretWord.length)
@@ -81,6 +83,8 @@ function handleCorrectGuess(word){
 }
 
 function handleIncorrectGuess(word){
+    lengthSlider.disabled = true
+    document.getElementById("confirmLength").disabled = true
     board.removeChild(document.getElementById("empty-row"))
         //console.log(wordList.find((w) => w === word))
         addWordRow(word,secretWord)
@@ -169,9 +173,6 @@ function addEmptyWordRow(wordLength) {
 }
 
 
-
-
-
 document.getElementById("userInput").addEventListener("keydown", (event) => {
     if(event.key == "Enter"){
         if(event.target.value.length === secretWord.length){
@@ -183,6 +184,18 @@ document.getElementById("userInput").addEventListener("keydown", (event) => {
       
 })
 
+
+lengthSlider.addEventListener("change", (event) => {
+    wordLength = event.target.value
+    document.getElementById("length").innerText = event.target.value
+
+})
+
+
+document.getElementById("confirmLength").addEventListener("click", () => {
+    board.innerHTML = ""
+    initializeWordList()
+})
 
 
 
