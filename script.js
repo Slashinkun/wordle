@@ -69,27 +69,32 @@ function showTemporaryAlert(message){
 }
 
 function handleCorrectGuess(word){
-        userInput.disabled = true
-        totalGuess++;
-        addWordRow(word,secretWord)
-        userTries.innerText = ` Tentatives : ${totalGuess}/${maxGuesses}`
-        alertUser.innerText = "Bravo ! Tu as trouvé le mot"
-        let retryButton = document.createElement("button")
-        retryButton.innerText='Recommencer'
-        retryButton.addEventListener("click",()=>{
-            location.reload()
-        })
-        alertUser.appendChild(retryButton)  
+    userInput.disabled = true
+    totalGuess++;
+    addWordRow(word,secretWord)
+    userTries.innerText = ` Tentatives : ${totalGuess}/${maxGuesses}`
+    alertUser.innerText = "Bravo ! Tu as trouvé le mot"
+    let retryButton = document.createElement("button")
+    retryButton.innerText='Recommencer'
+    retryButton.addEventListener("click",()=>{
+        location.reload()
+    })
+    alertUser.appendChild(retryButton)  
 }
 
 function handleIncorrectGuess(word){
+    hideSettings()
+    board.removeChild(document.getElementById("empty-row"))
+    //console.log(wordList.find((w) => w === word))
+    addWordRow(word,secretWord)
+    addEmptyWordRow(secretWord.length)
+    totalGuess++;
+}
+
+function hideSettings(){
+    document.getElementById("settings").style.display = "none"
     lengthSlider.disabled = true
     document.getElementById("confirmLength").disabled = true
-    board.removeChild(document.getElementById("empty-row"))
-        //console.log(wordList.find((w) => w === word))
-        addWordRow(word,secretWord)
-        addEmptyWordRow(secretWord.length)
-        totalGuess++;
 }
 
 function handleEndGame(){
