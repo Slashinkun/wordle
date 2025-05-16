@@ -8,17 +8,29 @@
 </head>
 <body>
     <header>WORDLE</header>
-    <div id="wordle-board"></div>
+    <div class="container">
+        <div class="infos">
+            <div id="score" class="text"></div>
+            <div id="userTries" class="text"></div>
+            <div id="settings" style="padding-top: 10px;">
+            <div class="text">Paramètres du jeu</div>
+            <label for="lengthSlider" class="text">Longueur du mot</label>
+            <input  name="lengthSlider" type="range" id="wordsLength" value="6" min="1" max="10" step="1">
+            <span id="length" class="text"></span>
+            <button id="confirmLength">Confirmer</button></div>
+            <div id="alert" class="text"></div> 
+        </div>
+        <div class="game">
+            <div id="wordle-board"></div>
+            <div id="keyboard"></div>
+
+        </div>
+       
     
-    <input type="text" name="" id="userInput">
-    <div id="userTries"></div>
-    <div id="settings" style="padding-top: 10px;">
-        <div>Paramètres du jeu</div>
-        <label for="lengthSlider">Longueur du mot</label>
-        <input  name="lengthSlider" type="range" id="wordsLength" value="6" min="1" max="10" step="1">
-        <span id="length"></span>
-        <button id="confirmLength">Confirmer</button></div>
-    <div id="alert"></div>
+    
+    
+    </div>
+    
     
     <script src="script.js"></script>
 </body>
