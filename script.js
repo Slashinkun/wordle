@@ -53,7 +53,7 @@ function startGame(){
     secretWord = wordList[Math.floor(Math.random() * wordList.length)];
     addEmptyRows(secretWord.length, maxGuesses);
     
-    console.log("Mot secret :", secretWord);
+    //console.log("Mot secret :", secretWord);
     
 
 }
@@ -137,7 +137,7 @@ function makeKeyboard(){
 
 
 function addEmptyRows(wordLength, numberOfRows) {
-  console.log("on est dans addemptyrowS")
+  
   for(let i = 0; i < numberOfRows; i++) {
     const row = document.createElement("div");
     row.classList.add(`word-row`);
@@ -168,11 +168,10 @@ function showTemporaryAlert(message){
 function handleCorrectGuess(word){
 
     const rows = board.children;
-    console.log(rows)
     const emptyRow = currentRow;
   if (emptyRow) {
     const newRow = createWordRow(word, secretWord);
-    //console.log('On va replace child')
+    
     board.replaceChild(newRow, emptyRow);
   }
   totalGuess++;
@@ -188,7 +187,6 @@ function handleCorrectGuess(word){
 function handleIncorrectGuess(word){
     hideSettings()
     const rows = board.children;
-    console.log(rows)
     const emptyRow = currentRow;
     if (emptyRow) {
         const newWordRow = createWordRow(word, secretWord);
@@ -217,7 +215,7 @@ function hideSettings(){
 }
 
 function handleEndGame(){
-  console.log("On est a la fin")
+  
   alertUser.innerHTML = `Dommage, le mot était <b>${secretWord}<b>`
   score = 0
   userScore.innerText = `Score : ${score}`
@@ -243,7 +241,7 @@ function countLetters(word){
 
 //ajoute au jeu le mot que le joueur a donné
 function createWordRow(guess, secretWord) {
-  console.log("on est dans createwordrow")
+  
   const row = document.createElement("div");
   row.className = "word-row";
 
@@ -295,7 +293,7 @@ function checkAlreadyMarked(key) {
 
 // aide pour montrer la longueur du mot
 function addEmptyWordRow(wordLength) {
-  console.log("On est dans emptywordrow")
+
   const row = document.createElement("div");
   row.id = "empty-row"
   row.classList.add("word-row");
