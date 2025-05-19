@@ -20,6 +20,8 @@ function removeAccents(str) {
     return str.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); 
 }
 
+
+//recuperer la liste de mot
 function initializeWordList(){
     fetch("mots.txt").then(response => response.text())
     .then(text => {
@@ -84,6 +86,7 @@ function checkWord(word){
     
 }
 
+//creation du clavier
 function makeKeyboard(){
   let keys = "azertyuiopqsdfghjklmwxcvbn"
   const specialKeys = ["Backspace", "Enter"];
@@ -132,16 +135,6 @@ function makeKeyboard(){
 
 }
 
-// function updateKeyboard(){
- 
-//   const keys = document.querySelectorAll(".key");
-
-//   keys.forEach(key => {
-//     key.classList.add("correct")
-//   });
-
-  
-// }
 
 function addEmptyRows(wordLength, numberOfRows) {
   console.log("on est dans addemptyrowS")
@@ -179,7 +172,7 @@ function handleCorrectGuess(word){
     const emptyRow = currentRow;
   if (emptyRow) {
     const newRow = createWordRow(word, secretWord);
-    console.log('On va replace child')
+    //console.log('On va replace child')
     board.replaceChild(newRow, emptyRow);
   }
   totalGuess++;
@@ -210,8 +203,6 @@ function handleIncorrectGuess(word){
         }
 
     }
-
-     
 
     totalGuess++;
     currentIndex = 0;
@@ -297,6 +288,7 @@ function createWordRow(guess, secretWord) {
   return row;
 }
 
+//voir si la touche du clavie a une couleur
 function checkAlreadyMarked(key) {
   return key.classList.contains("correct") || key.classList.contains("almost");
 }
@@ -324,13 +316,12 @@ function addEmptyWordRow(wordLength) {
 }
 
 
-
+//evenement pour voir obtenir la longueur du mot choisi
 lengthSlider.addEventListener("change", (event) => {
     wordLength = event.target.value
     document.getElementById("length").innerText = event.target.value
 
 })
-
 
 document.getElementById("confirmLength").addEventListener("click", () => {
     board.innerHTML = ""
@@ -338,6 +329,8 @@ document.getElementById("confirmLength").addEventListener("click", () => {
 })
 
 
+
+//changer le curseur sur les boites à lettres
 function updateActiveBox() {
   if (!currentRow) return;
   for (let i = 0; i < currentRow.children.length; i++) {
@@ -345,6 +338,8 @@ function updateActiveBox() {
   }
 }
 
+
+//evenement pour recuperer le touche pressé par le joueur 
 document.addEventListener("keydown", (event) => {
     if (!currentRow) return;
 
@@ -370,7 +365,7 @@ document.addEventListener("keydown", (event) => {
 
 
 
-
+//initialisation
 initializeWordList()
 updateActiveBox();
 
