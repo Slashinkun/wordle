@@ -4,31 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Document</title>
+    <title>WORDLE</title>
 </head>
 <body>
-    <header>WORDLE</header>
+    <header style="color: white;">WORDLE</header>
     <div class="container">
         <div class="infos">
-            <div id="score" class="text"></div>
-            <div id="userTries" class="text"></div>
+            <div id="score" class="infos-text"></div>
+            <div id="userTries" class="infos-text"></div>
             <div id="settings" style="padding-top: 10px;">
-            <div class="text">Paramètres du jeu</div>
-            <label for="lengthSlider" class="text">Longueur du mot</label>
+            <div class="infos-text">Paramètres du jeu</div>
+            <label for="lengthSlider" class="infos-text">Longueur du mot</label>
             <input  name="lengthSlider" type="range" id="wordsLength" value="6" min="1" max="10" step="1">
-            <span id="length" class="text"></span>
+            <span id="length" class="infos-text"></span>
             <button id="confirmLength">Confirmer</button></div>
-            <div id="alert" class="text"></div> 
+            
         </div>
         <div class="game">
             <div id="wordle-board"></div>
+            <div id="alert" class="infos-text"></div> 
             <div id="keyboard"></div>
 
         </div>
        
-    
-    
-    
     </div>
     
     
