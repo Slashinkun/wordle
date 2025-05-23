@@ -2,10 +2,10 @@
 
 ## Comment jouer ?
 
-Essayer de deviner le mot choisis par le jeu en donnant un mot français de la longueur égale au mot choisi
+Essayez de deviner le mot choisi par le jeu en donnant un mot français de la même longueur que le mot choisi
 
 ## Jouer au jeu
 [Jouer](https://slashinkun.github.io/wordle/)
 
 ## Installation
-Cloner/telecharger le repo puis demarrer un serveur local et charger le fichier HTML dans le serveur local
+Cloner/télécharger le repo, puis démarrer un serveur local et charger le fichier HTML dans le serveur local
