@@ -8,4 +8,4 @@ Essayer de deviner le mot choisis par le jeu en donnant un mot français de la l
 [Jouer](https://slashinkun.github.io/wordle/)
 
 ## Installation
-Cloner/telecharger le repo puis demarrer un serveur local et aller sur le serveur local
+Cloner/telecharger le repo puis demarrer un serveur local et charger le fichier HTML dans le serveur local
